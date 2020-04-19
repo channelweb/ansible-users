@@ -1,6 +1,12 @@
 ---
 users_groups:
   - admins
+
+# Common users group used to check users removal
+common_group: sudo
+# Perform user removal on users in `common_group` not listes in `users
+exec_remove: no
+
 users:  # Users **SHOULD** change their passwords on their first login.
   admin:  # (IT) https://twitter.com/agilegigi/status/649961038138482688
     password: $6$rounds=656000$6xPefyB0D3dQacsd$/bC.gnd6M.WThGD7dlHrZMSfV3fETYAywhYRqMc09qLSArqKS.EpvVtKaxyI15GSp9AWzuBSNRoLx7vsp5jiq/

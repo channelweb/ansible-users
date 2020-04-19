@@ -79,3 +79,22 @@
     mode: "0644"
   with_dict: "{{ users }}"
   when: item.value.ps1 is defined
+
+- name: lookup current users in common group
+  shell: "awk -F':' '/{{ common_group }}/{print $4}' /etc/group"
+  when: common_group is defined
+  register: current_users
+
+- name: users to remove list
+  set_fact:
+    remove_users: "{{ current_users.stdout.split(',') | difference(users.keys()) }}"
+  when: current_users.stdout is defined
+
+- name: execute users removal
+  become: yes
+  user:
+    name: "{{ item }}"
+    remove: yes
+    state: absent
+  loop: "{{ remove_users }}"
+  when: remove_users is defined and exec_remove is defined and exec_remove
