@@ -14,7 +14,7 @@
     group: "{{ item.value.group | default(omit) }}"
     groups: "{{ item.value.groups | default([]) | join(',') }}"
     update_password: on_create
-    shell: /bin/bash
+    shell: "{{ item.value.shell | default('/bin/bash') }}"
     generate_ssh_key: "{{ item.value.generate_ssh_key | default(omit) }}"
   with_dict: "{{ users }}"
   when: item.value.skip_creation is undefined or item.value.skip_creation
